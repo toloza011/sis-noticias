@@ -11,10 +11,10 @@
   <title>Sistema de noticias</title>
 
   <!-- Bootstrap core CSS -->
-  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="{{asset('vendor/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
 
   <!-- Custom fonts for this template -->
-  <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <link href="{{asset('vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css">
   <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet'
     type='text/css'>
   <link
@@ -22,7 +22,7 @@
     rel='stylesheet' type='text/css'>
 
   <!-- Custom styles for this template -->
-  <link href="css/clean-blog.min.css" rel="stylesheet">
+  <link href="{{asset('css/clean-blog.min.css')}}" rel="stylesheet">
 
 </head>
 
@@ -31,7 +31,7 @@
   <!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
     <div class="container">
-      <a class="navbar-brand" href="index.html">Noticias</a>
+      <a class="navbar-brand" href="{{route('home')}}">Noticias</a>
       <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
         data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
         aria-label="Toggle navigation">
@@ -41,18 +41,22 @@
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item">
-            <a class="nav-link" href="index.html">Home</a>
+            <a class="nav-link" href="{{route('home')}}">Home</a>
           </li>
-          <li class="nav-item">
+          
+          {{-- <li class="nav-item">
             <a class="nav-link" href="about.html">About</a>
-          </li>
+          </li> --}}
           <li class="nav-item">
-            <a class="nav-link" href="post.html">Sample Post</a>
+            <a class="nav-link" href="{{route('noticia.index')}}">Noticias</a>
           </li>
-          <li class="nav-item">
+        {{--   <li class="nav-item">
             <a class="nav-link" href="contact.html">Contact</a>
-          </li>
+          </li> --}}
           @auth
+          <li class="nav-item">
+            <a class="nav-link" href="{{route('noticia.create')}}">Crear Noticia</a>
+          </li>
           <li class="nav-item">
             <a class="nav-link" href="#">{{Auth::user()->name}}</a>
           </li>
@@ -80,20 +84,7 @@
     </div>
   </nav>
 
-  <!-- Page Header -->
-  <header class="masthead" style="background-image: url('img/home-bg.jpg')">
-    <div class="overlay"></div>
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-8 col-md-10 mx-auto">
-          <div class="site-heading">
-            <h1>Ultimas Noticias</h1>
-            <span class="subheading">Estas son las ultimas noticias</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </header>
+
 
   <!-- Main Content -->
   @yield('content')
@@ -138,11 +129,13 @@
   </footer>
 
   <!-- Bootstrap core JavaScript -->
-  <script src="vendor/jquery/jquery.min.js"></script>
-  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
+
+  <script src="{{asset('vendor/jquery/jquery.min.js')}}"></script>
+  <script src="{{asset('vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
   <!-- Custom scripts for this template -->
-  <script src="js/clean-blog.min.js"></script>
+  <script src="{{asset('js/clean-blog.min.js')}}"></script>
+  @yield('scripts')
 
 </body>
 

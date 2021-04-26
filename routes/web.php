@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\NoticiaController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,6 +15,17 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-Route::get('/',function(){
-    return view('home');
+Route::get('/',[NoticiaController::class,'index'])->name('home');
+
+
+
+
+Route::prefix('noticia')->group(function () {
+    Route::get('/',[NoticiaController::class,'index'])->name('noticia.index');
+    Route::get('{id}',[NoticiaController::class,'show'])->name('noticia.show');
+    Route::middleware(['auth'])->group(function () {
+        Route::get('/create',[NoticiaController::class,'create'])->name('noticia.create');
+        Route::post('/store',[NoticiaController::class,'store'])->name('noticia.store');
+        Route::post('ckeditor/upload', [NoticiaController::class,'upload'])->name('ckeditor.image-upload');
+    });
 });
