@@ -18,7 +18,7 @@ class CreateNoticiasTable extends Migration
             $table->string('titulo');
             $table->string('subtitulo');
             $table->text('contenido');
-            $table->string('portada');
+            $table->string('portada')->nullable();
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();

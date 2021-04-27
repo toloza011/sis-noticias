@@ -22,10 +22,13 @@ Route::get('/',[NoticiaController::class,'index'])->name('home');
 
 Route::prefix('noticia')->group(function () {
     Route::get('/',[NoticiaController::class,'index'])->name('noticia.index');
-    Route::get('{id}',[NoticiaController::class,'show'])->name('noticia.show');
+    Route::get('/show/{id}',[NoticiaController::class,'show'])->name('noticia.show');
     Route::middleware(['auth'])->group(function () {
         Route::get('/create',[NoticiaController::class,'create'])->name('noticia.create');
         Route::post('/store',[NoticiaController::class,'store'])->name('noticia.store');
         Route::post('ckeditor/upload', [NoticiaController::class,'upload'])->name('ckeditor.image-upload');
+        Route::get('/edit/{id}',[NoticiaController::class,'edit'])->name('noticia.edit');
+        Route::put('/update/{id}',[NoticiaController::class,'update'])->name('noticia.update');
+        Route::delete('/delete/{id}',[NoticiaController::class,'destroy'])->name('noticia.destroy');
     });
 });

@@ -3,7 +3,7 @@
 
 @section('content')
  <!-- Page Header -->
- <header class="masthead" style="background-image: url('img/home-bg.jpg')">
+ <header class="masthead" style="background-image: url('{{asset('noticias/portadas/'.$noticias->where('portada','<>','')->last()->portada)}}')">
   <div class="overlay"></div>
   <div class="container">
     <div class="row">

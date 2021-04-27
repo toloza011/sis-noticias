@@ -62,14 +62,19 @@ class NoticiaController extends Controller
         $noticia->subtitulo = $request->subtitulo;
 
         $noticia->contenido = $request->contenido;
-
-        $portada = $request->file('portada');
         
-        $imageName = time().'.'.$portada->extension(); 
+        if($request->hasFile('portada')){
+            $portada = $request->file('portada');
+            $imageName = time().'.'.$portada->extension(); 
         
-        $imagenPath = $portada->move(public_path('noticias\portadas'),$imageName); 
-
-        $noticia->portada = $imageName;
+            $imagenPath = $portada->move(public_path('noticias\portadas'),$imageName); 
+    
+            $noticia->portada = $imageName;
+        }else{
+            $noticia->portada = null;
+        }
+        
+       
 
         $noticia->user_id = Auth::user()->id;
 
@@ -98,9 +103,11 @@ class NoticiaController extends Controller
      * @param  \App\Models\Noticia  $noticia
      * @return \Illuminate\Http\Response
      */
-    public function edit(Noticia $noticia)
+    public function edit($id)
     {
-        //
+        $noticia = Noticia::find($id);
+
+        return view('noticias.edit',compact('noticia'));
     }
 
     /**
@@ -110,9 +117,26 @@ class NoticiaController extends Controller
      * @param  \App\Models\Noticia  $noticia
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Noticia $noticia)
+    public function update(Request $request, $id)
     {
-        //
+        $noticia = Noticia::find($id);
+        if($request->file('portada')){
+            $portada = $request->file('portada');
+        
+            $imageName = time().'.'.$portada->extension(); 
+            
+            $imagenPath = $portada->move(public_path('noticias\portadas'),$imageName); 
+    
+            $noticia->portada = $imageName;
+        }
+        $noticia->update([
+            'titulo' => $request->titulo,
+            'subtitulo' => $request->subtitulo,
+            'contenido' => $request->contenido
+        ]);
+        return redirect()->route('noticia.index')->with('notice_success','Noticia actualizada exitosamente!');
+
+       
     }
 
     /**
@@ -121,9 +145,13 @@ class NoticiaController extends Controller
      * @param  \App\Models\Noticia  $noticia
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Noticia $noticia)
+    public function destroy($id)
     {
-        //
+        $noticia = Noticia::find($id)->delete();
+        return response()->json([
+            'message' => 'Noticia eliminada exitosamente',
+            'status' => 200
+        ]);
     }
 
     

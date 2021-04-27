@@ -24,6 +24,14 @@
     <div class="container">
       <div class="row">
         <div class="col-lg-8 col-md-10 mx-auto">
+            @if(Auth::check() && Auth::user()->id == $noticia->user_id)
+            <form action="{{ route('noticia.destroy', $noticia->id) }}" method="POST">
+            @csrf 
+            @method('DELETE')
+            </form>
+            <button class="btn btn-link" type="submit" >Eliminar noticia</button>
+            <a href="{{route('noticia.edit',$noticia->id)}}" class="btn btn-link">Editar noticia</a>
+            @endif
             {!!$noticia->contenido!!}
         </div>
       </div>
@@ -33,3 +41,4 @@
   <hr>
 
 @endsection
+
